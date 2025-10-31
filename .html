@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hair Transplant Cost Calculator – Bangladesh</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    font-family: "Poppins", Arial, sans-serif;
+    background: linear-gradient(180deg, #eaffec, #f9fff9, #ffffff);
+    margin: 0; padding: 0;
+  }
+
+  #htc {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 16px;
+    max-width: 1100px;
+    width: 95%;
+    margin: 20px auto;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.08);
+  }
+
+  h2 {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #0d3a34;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  p.sub {
+    text-align: center;
+    color: #444;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+  }
+
+  #gradeSection { text-align: center; margin-bottom: 18px; }
+  #gradeSection h3 { font-size: 1.2rem; font-weight: 600; color: #0d3a34; margin-bottom: 10px; }
+  #gradePreview { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  #gradePreview img {
+    width: 80px; border-radius: 8px; border: 2px solid transparent;
+    cursor: pointer; transition: all 0.3s ease; position: relative;
+  }
+  #gradePreview img.active {
+    border: 2px solid #009345; box-shadow: 0 0 12px rgba(0,147,69,0.4);
+    transform: scale(1.05);
+  }
+  #gradePreview img.active::after {
+    content: "✔"; position: absolute; top: 5px; right: 6px;
+    background: #009345; color: #fff; font-size: 0.7rem;
+    padding: 3px 5px; border-radius: 50%;
+  }
+  #graftRange {
+    display: block; color: #009345; margin-top: 6px; font-weight: 600;
+  }
+
+  .form-flex {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+  }
+
+  .form-group {
+    background: #f9fff9;
+    border: 1px solid #d1f0d3;
+    border-radius: 10px;
+    padding: 10px 12px;
+    transition: 0.3s;
+  }
+  .form-group:hover { box-shadow: 0 0 8px rgba(0,0,0,0.05); }
+
+  label {
+    display: block;
+    font-weight: 600;
+    color: #0f2d4a;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid #a8d5b2;
+    border-radius: 8px;
+    font-size: 15px;
+    background: #f7fff9;
+    color: #0d3a34;
+    transition: border-color 0.3s;
+  }
+  input:focus, select:focus {
+    border-color: #009345;
+    outline: none;
+    background: #fff;
+  }
+
+  /* ✅ Clean Bangladesh phone input – block theme +880 flag */
+  input[type="tel"].bd-phone {
+    all: unset;
+    display: block;
+    width: 100%;
+    font-family: inherit;
+    font-size: 15px;
+    padding: 10px 12px;
+    border: 1px solid #a8d5b2;
+    border-radius: 8px;
+    background: #f9fff9;
+    color: #0d3a34;
+    line-height: 1.4;
+    box-sizing: border-box;
+  }
+  input[type="tel"].bd-phone:focus {
+    border-color: #009345;
+    background: #fff;
+    outline: none;
+  }
+  input[type="tel"].bd-phone:hover {
+    background: #f4fff5;
+  }
+
+  /* ✅ Hide any system-added +880 flag or dial code */
+  .iti__flag-container,
+  .iti__selected-flag,
+  .iti__selected-dial-code {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #calculateBtn {
+    background: #142c5c; color: white; padding: 14px;
+    border: none; border-radius: 10px; font-size: 16px;
+    font-weight: 600; cursor: pointer; width: 100%;
+    margin-top: 16px; transition: all 0.3s ease;
+  }
+  #calculateBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(20,44,92,0.3);
+  }
+
+  #trustBanner {
+    text-align: center; margin-top: 14px; font-weight: 600; color: #0f2d4a;
+    background: linear-gradient(90deg, #e6fbe9, #f9fff9);
+    border-radius: 10px; padding: 10px 8px;
+    font-size: 0.85rem; line-height: 1.5;
+    border: 1px solid #bde8c0; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+  }
+
+  #result {
+    margin-top: 28px; display: none; opacity: 0;
+    transform: translateY(10px); transition: all 0.6s ease;
+    text-align: center; background: #eaf9ee;
+    border: 1px solid #bde8c0; padding: 20px; border-radius: 12px;
+  }
+  #result.show { display: block; opacity: 1; transform: translateY(0); }
+  #result h3 { color: #0d3a34; margin-top: 0; font-size: 1.2rem; }
+  #highlightBox {
+    display: inline-block; background: #e3ffe9; color: #006e2d;
+    font-weight: 700; padding: 6px 10px; border-radius: 10px;
+    margin-top: 6px;
+  }
+  .highlightMarket {
+    background: #c8e6c9; color: #1b5e20; font-weight: 700;
+    padding: 2px 6px; border-radius: 6px;
+  }
+
+  table {
+    width: 100%; border-collapse: collapse; margin-top: 10px;
+  }
+  th, td { border: 1px solid #bde8c0; padding: 8px; }
+  th {
+    background: #d6f7da; color: #0d3a34; text-align: center;
+  }
+  td {
+    text-align: center; color: #006e2d; font-weight: 500;
+  }
+
+  @media (max-width: 600px) {
+    input[type="tel"].bd-phone {
+      width: 100%;
+      font-size: 16px;
+    }
+  }
+</style>
+</head>
+
+<body>
+<div id="htc">
+  <h2>🇧🇩 Hair Transplant Cost Calculator – Bangladesh</h2>
+  <p class="sub">Estimate your grafts & cost instantly 💰</p>
+
+  <div id="gradeSection">
+    <h3>🧑‍🦲 Select Your Baldness Grade</h3>
+    <div id="gradePreview">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/grade-1.webp" data-grade="1">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/Grade-2.webp" data-grade="2">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/Grade-3.webp" data-grade="3">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/Grade-4.webp" data-grade="4">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/Grade-5.webp" data-grade="5">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/Grade-6.webp" data-grade="6">
+      <img src="https://hairfreehairgrow.com/wp-content/uploads/2025/03/grade-7.webp" data-grade="7">
+    </div>
+    <small id="graftRange"></small>
+  </div>
+
+  <div class="form-flex">
+    <div class="form-group"><label>👤 Your Name</label><input type="text" id="username" placeholder="Enter your name"></div>
+
+    <!-- ✅ Phone number cleaned -->
+    <div class="form-group"><label>📞 Phone Number (Bangladesh)</label>
+      <input type="tel" id="phone" class="bd-phone" maxlength="11" inputmode="numeric" autocomplete="off">
+    </div>
+
+    <div class="form-group"><label>📍 City</label><input type="text" id="city" placeholder="Enter your city"></div>
+    <div class="form-group"><label>⚙️ Technique</label>
+      <select id="technique">
+        <option value="30">Implanter FUE</option>
+        <option value="35">Sapphire FUE</option>
+        <option value="40">BIO-FUE</option>
+        <option value="50">BIG-FUE</option>
+        <option value="65">DHI</option>
+      </select>
+    </div>
+    <div class="form-group"><label>💉 Grafts Required</label><input type="number" id="grafts" placeholder="e.g. 2000"></div>
+    <div class="form-group"><label>✉️ Email (optional)</label><input type="email" id="email" placeholder="Enter email (optional)"></div>
+  </div>
+
+  <button id="calculateBtn">Calculate 💰</button>
+
+  <div id="trustBanner">
+    ✅ 14+ Years Expertise | 🏥 Clinics in Dhaka, Chittagong<br>
+    💯 1,00,000+ Happy Clients | 🌟 5,500+ Reviews | 🌍 Trusted Globally
+  </div>
+
+  <div id="result">
+    <h3><span id="greeting"></span> Estimated Package:
+      <span id="highlightBox">৳<span id="total"></span></span>
+    </h3>
+    <p><strong>City:</strong> <span id="cityDisplay"></span></p>
+    <p><strong>Technique:</strong> <span id="techniqueDisplay"></span></p>
+    <p><strong>Baldness Grade:</strong> <span id="gradeDisplay"></span></p>
+    <p><strong>Market Price:</strong> <span class="highlightMarket">৳<span id="marketPriceRange"></span></span></p>
+    <div id="priceBreakdown"></div>
+    <div id="beforeAfter"></div>
+  </div>
+</div>
+
+<script>
+const gradeData = {
+  1:{range:"1000–1200",grafts:1100,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02.webp"},
+  2:{range:"1200–1500",grafts:1350,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-2.webp"},
+  3:{range:"1500–2200",grafts:1850,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-4.webp"},
+  4:{range:"2200–2800",grafts:2500,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-6.webp"},
+  5:{range:"2800–3500",grafts:3150,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-8.webp"},
+  6:{range:"3500–4500",grafts:4000,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-11.webp"},
+  7:{range:"4500–6000",grafts:5250,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-13.webp"}
+};
+
+document.querySelectorAll("#gradePreview img").forEach(img=>{
+  img.addEventListener("click",e=>{
+    const g=e.target.dataset.grade;
+    document.querySelectorAll("#gradePreview img").forEach(i=>i.classList.remove("active"));
+    e.target.classList.add("active");
+    const d=gradeData[g];
+    document.getElementById("grafts").value=d.grafts;
+    document.getElementById("graftRange").innerText=`💡 Suggested: ${d.range}`;
+    document.getElementById("gradePreview").dataset.selected=g;
+  });
+});
+
+// ✅ Restrict phone input – only digits, max 11, starts with 01
+document.getElementById("phone").addEventListener("input", function() {
+  this.value = this.value.replace(/[^0-9]/g, "").slice(0, 11);
+  if (!this.value.startsWith("01")) this.value = "01";
+});
+
+document.getElementById("calculateBtn").addEventListener("click",()=>{
+  const name=document.getElementById("username").value.trim();
+  const city=document.getElementById("city").value.trim();
+  const grafts=parseInt(document.getElementById("grafts").value);
+  const rate=parseInt(document.getElementById("technique").value);
+  const grade=document.getElementById("gradePreview").dataset.selected;
+
+  if(!grafts||grafts<=0){ alert("💡 Please enter grafts or select grade."); return; }
+
+  const totalMin=grafts*rate*0.9;
+  const totalMax=grafts*rate*1.1;
+  const minMarket=Math.round(totalMin*1.05);
+  const maxMarket=Math.round(totalMax*1.05);
+
+  document.getElementById("greeting").innerText=name?`Hi ${name},`:"Hi 👋";
+  document.getElementById("total").innerText=`${totalMin.toLocaleString()} – ${totalMax.toLocaleString()}`;
+  document.getElementById("marketPriceRange").innerText=`${minMarket.toLocaleString()} – ${maxMarket.toLocaleString()}`;
+  document.getElementById("techniqueDisplay").innerText=document.getElementById("technique").selectedOptions[0].text;
+  document.getElementById("cityDisplay").innerText=city||"—";
+  document.getElementById("gradeDisplay").innerText=grade?"Grade "+grade:"Not Selected";
+
+  const breakdown=document.getElementById("priceBreakdown");
+  breakdown.innerHTML=`<h4 style="margin-top:16px;color:#006e2d;">💰 Price Breakdown</h4>
+  <table><thead><tr><th>Grafts</th><th>Approx. Cost (৳)</th></tr></thead><tbody></tbody></table>`;
+  const tbody=breakdown.querySelector("tbody");
+  [grafts-200,grafts,grafts+100,grafts+200].forEach(v=>{
+    if(v>0){
+      const tr=document.createElement("tr");
+      const cost=v*rate;
+      tr.innerHTML=`<td>${v}</td><td>${cost.toLocaleString()}</td>`;
+      tbody.appendChild(tr);
+    }
+  });
+
+  const before=document.getElementById("beforeAfter");
+  if(grade){
+    before.innerHTML=`<h4 style="margin-top:16px;color:#006e2d;">🎯 Before & After (Grade ${grade})</h4>
+    <img src="${gradeData[grade].img}" alt="Grade ${grade} result">`;
+  } else before.innerHTML="";
+
+  const result=document.getElementById("result");
+  result.classList.add("show");
+  result.scrollIntoView({behavior:"smooth"});
+});
+</script>
+</body>
+</html>
