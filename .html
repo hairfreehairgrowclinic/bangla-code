@@ -96,40 +96,28 @@
     background: #fff;
   }
 
-  /* ✅ Clean Bangladesh phone input – block theme +880 flag */
   input[type="tel"].bd-phone {
-    all: unset;
-    display: block;
     width: 100%;
-    font-family: inherit;
-    font-size: 15px;
     padding: 10px 12px;
     border: 1px solid #a8d5b2;
     border-radius: 8px;
     background: #f9fff9;
     color: #0d3a34;
+    font-size: 15px;
     line-height: 1.4;
     box-sizing: border-box;
   }
+
   input[type="tel"].bd-phone:focus {
     border-color: #009345;
     background: #fff;
     outline: none;
   }
-  input[type="tel"].bd-phone:hover {
-    background: #f4fff5;
-  }
 
-  /* ✅ Hide any system-added +880 flag or dial code */
   .iti__flag-container,
   .iti__selected-flag,
   .iti__selected-dial-code {
     display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    width: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
   }
 
   #calculateBtn {
@@ -143,14 +131,6 @@
     box-shadow: 0 6px 16px rgba(20,44,92,0.3);
   }
 
-  #trustBanner {
-    text-align: center; margin-top: 14px; font-weight: 600; color: #0f2d4a;
-    background: linear-gradient(90deg, #e6fbe9, #f9fff9);
-    border-radius: 10px; padding: 10px 8px;
-    font-size: 0.85rem; line-height: 1.5;
-    border: 1px solid #bde8c0; box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-  }
-
   #result {
     margin-top: 28px; display: none; opacity: 0;
     transform: translateY(10px); transition: all 0.6s ease;
@@ -159,32 +139,100 @@
   }
   #result.show { display: block; opacity: 1; transform: translateY(0); }
   #result h3 { color: #0d3a34; margin-top: 0; font-size: 1.2rem; }
+
   #highlightBox {
-    display: inline-block; background: #e3ffe9; color: #006e2d;
+    display: inline-block; background: #e3ffe9; color: #009345;
     font-weight: 700; padding: 6px 10px; border-radius: 10px;
     margin-top: 6px;
   }
-  .highlightMarket {
-    background: #c8e6c9; color: #1b5e20; font-weight: 700;
-    padding: 2px 6px; border-radius: 6px;
+
+  .marketPrice {
+    color: #d90429;
+    font-weight: 600;
   }
 
-  table {
-    width: 100%; border-collapse: collapse; margin-top: 10px;
+  /* 🌟 Trust Banner */
+  #trustBanner {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    background: linear-gradient(90deg, #eaffec 0%, #f6fff8 100%);
+    border: 1px solid #c6efd1;
+    border-radius: 16px;
+    padding: 28px 18px;
+    text-align: center;
+    margin-top: 30px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+    transition: all 0.6s ease;
   }
-  th, td { border: 1px solid #bde8c0; padding: 8px; }
-  th {
-    background: #d6f7da; color: #0d3a34; text-align: center;
-  }
-  td {
-    text-align: center; color: #006e2d; font-weight: 500;
+  #trustBanner.show { display: block; opacity: 1; transform: translateY(0); }
+  #trustBanner:hover {
+    box-shadow: 0 8px 25px rgba(0,147,69,0.12);
+    transform: translateY(-2px);
   }
 
-  @media (max-width: 600px) {
-    input[type="tel"].bd-phone {
-      width: 100%;
-      font-size: 16px;
-    }
+  #trustBanner h3 {
+    color: #0d3a34;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+
+  .trust-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 18px;
+    border: 1px solid #dff2e1;
+    min-width: 180px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  }
+  .trust-item:hover {
+    transform: translateY(-3px);
+    border-color: #009345;
+    box-shadow: 0 4px 16px rgba(0,147,69,0.15);
+  }
+
+  .trust-icon {
+    font-size: 1.6rem;
+    color: #009345;
+    background: #e7fbea;
+    border-radius: 50%;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .trust-text {
+    text-align: left;
+    color: #0f2d4a;
+    font-size: 0.9rem;
+    line-height: 1.2;
+  }
+
+  .trust-text strong {
+    color: #006e2d;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 700px) {
+    .trust-item { flex: 1 1 45%; }
+    #trustBanner h3 { font-size: 1.1rem; }
+  }
+  @media (max-width: 480px) {
+    .trust-item { flex: 1 1 100%; justify-content: center; }
   }
 </style>
 </head>
@@ -210,20 +258,27 @@
 
   <div class="form-flex">
     <div class="form-group"><label>👤 Your Name</label><input type="text" id="username" placeholder="Enter your name"></div>
-
-    <!-- ✅ Phone number cleaned -->
     <div class="form-group"><label>📞 Phone Number (Bangladesh)</label>
       <input type="tel" id="phone" class="bd-phone" maxlength="11" inputmode="numeric" autocomplete="off">
     </div>
-
-    <div class="form-group"><label>📍 City</label><input type="text" id="city" placeholder="Enter your city"></div>
+    <div class="form-group"><label>📍 Select City</label>
+      <select id="city">
+        <option>Dhaka</option>
+        <option>Chittagong</option>
+        <option>Sylhet</option>
+        <option>Rajshahi</option>
+        <option>Khulna</option>
+        <option>Barishal</option>
+        <option>Rangpur</option>
+        <option>Mymensingh</option>
+      </select>
+    </div>
     <div class="form-group"><label>⚙️ Technique</label>
       <select id="technique">
-        <option value="30">Implanter FUE</option>
-        <option value="35">Sapphire FUE</option>
-        <option value="40">BIO-FUE</option>
-        <option value="50">BIG-FUE</option>
-        <option value="65">DHI</option>
+        <option value="50">Sapphire FUE Hair Transplant</option>
+        <option value="35">BIO FUE Hair Transplant</option>
+        <option value="75">Big FUE Hair Transplant</option>
+        <option value="100">Direct Hair Transplant (DHT)</option>
       </select>
     </div>
     <div class="form-group"><label>💉 Grafts Required</label><input type="number" id="grafts" placeholder="e.g. 2000"></div>
@@ -232,33 +287,42 @@
 
   <button id="calculateBtn">Calculate 💰</button>
 
-  <div id="trustBanner">
-    ✅ 14+ Years Expertise | 🏥 Clinics in Dhaka, Chittagong<br>
-    💯 1,00,000+ Happy Clients | 🌟 5,500+ Reviews | 🌍 Trusted Globally
-  </div>
-
   <div id="result">
-    <h3><span id="greeting"></span> Estimated Package:
+    <h3><span id="greeting"></span> Our Price:
       <span id="highlightBox">৳<span id="total"></span></span>
     </h3>
+    <p class="marketPrice">Market Price: ৳<span id="marketPriceRange"></span></p>
     <p><strong>City:</strong> <span id="cityDisplay"></span></p>
     <p><strong>Technique:</strong> <span id="techniqueDisplay"></span></p>
     <p><strong>Baldness Grade:</strong> <span id="gradeDisplay"></span></p>
-    <p><strong>Market Price:</strong> <span class="highlightMarket">৳<span id="marketPriceRange"></span></span></p>
-    <div id="priceBreakdown"></div>
     <div id="beforeAfter"></div>
   </div>
+
+  <!-- 🌟 Trust Banner moved to bottom -->
+  <section id="trustBanner">
+    <h3>Why <span style="color:#009345;">1,00,000+</span> People Trust Us</h3>
+    <p style="max-width:680px;margin:0 auto 22px;color:#3b4c47;font-size:0.95rem;">
+      You're in safe hands — Bangladesh’s most trusted hair restoration team with proven excellence and happy clients nationwide.
+    </p>
+    <div class="trust-grid">
+      <div class="trust-item"><div class="trust-icon">👨‍⚕️</div><div class="trust-text"><strong>14+ Years</strong><br>Hair Transplant Expertise</div></div>
+      <div class="trust-item"><div class="trust-icon">🏥</div><div class="trust-text"><strong>Clinics</strong><br>Dhaka & Chittagong</div></div>
+      <div class="trust-item"><div class="trust-icon">💯</div><div class="trust-text"><strong>1,00,000+</strong><br>Happy Clients</div></div>
+      <div class="trust-item"><div class="trust-icon">🌟</div><div class="trust-text"><strong>5,500+</strong><br>Google Reviews</div></div>
+      <div class="trust-item"><div class="trust-icon">🧠</div><div class="trust-text"><strong>Advanced</strong><br>Sapphire & BIO FUE</div></div>
+    </div>
+  </section>
 </div>
 
 <script>
 const gradeData = {
-  1:{range:"1000–1200",grafts:1100,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02.webp"},
-  2:{range:"1200–1500",grafts:1350,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-2.webp"},
-  3:{range:"1500–2200",grafts:1850,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-4.webp"},
-  4:{range:"2200–2800",grafts:2500,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-6.webp"},
-  5:{range:"2800–3500",grafts:3150,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-8.webp"},
-  6:{range:"3500–4500",grafts:4000,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-11.webp"},
-  7:{range:"4500–6000",grafts:5250,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-13.webp"}
+  1:{range:"1000–1500",grafts:1200,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02.webp"},
+  2:{range:"1500–2000",grafts:1800,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-2.webp"},
+  3:{range:"2500–3000",grafts:2750,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-4.webp"},
+  4:{range:"3500–4500",grafts:4000,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-6.webp"},
+  5:{range:"5000–6000",grafts:5500,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-8.webp"},
+  6:{range:"6000–6500",grafts:6200,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/02-11.webp"},
+  7:{range:"7000–8000",grafts:7500,img:"https://hairfreehairgrow.com/wp-content/uploads/2025/03/01-13.webp"}
 };
 
 document.querySelectorAll("#gradePreview img").forEach(img=>{
@@ -273,10 +337,11 @@ document.querySelectorAll("#gradePreview img").forEach(img=>{
   });
 });
 
-// ✅ Restrict phone input – only digits, max 11, starts with 01
 document.getElementById("phone").addEventListener("input", function() {
   this.value = this.value.replace(/[^0-9]/g, "").slice(0, 11);
-  if (!this.value.startsWith("01")) this.value = "01";
+  if (!this.value.startsWith("01")) {
+    this.value = "01";
+  }
 });
 
 document.getElementById("calculateBtn").addEventListener("click",()=>{
@@ -300,28 +365,14 @@ document.getElementById("calculateBtn").addEventListener("click",()=>{
   document.getElementById("cityDisplay").innerText=city||"—";
   document.getElementById("gradeDisplay").innerText=grade?"Grade "+grade:"Not Selected";
 
-  const breakdown=document.getElementById("priceBreakdown");
-  breakdown.innerHTML=`<h4 style="margin-top:16px;color:#006e2d;">💰 Price Breakdown</h4>
-  <table><thead><tr><th>Grafts</th><th>Approx. Cost (৳)</th></tr></thead><tbody></tbody></table>`;
-  const tbody=breakdown.querySelector("tbody");
-  [grafts-200,grafts,grafts+100,grafts+200].forEach(v=>{
-    if(v>0){
-      const tr=document.createElement("tr");
-      const cost=v*rate;
-      tr.innerHTML=`<td>${v}</td><td>${cost.toLocaleString()}</td>`;
-      tbody.appendChild(tr);
-    }
-  });
-
-  const before=document.getElementById("beforeAfter");
+  const b=document.getElementById("beforeAfter");
   if(grade){
-    before.innerHTML=`<h4 style="margin-top:16px;color:#006e2d;">🎯 Before & After (Grade ${grade})</h4>
-    <img src="${gradeData[grade].img}" alt="Grade ${grade} result">`;
-  } else before.innerHTML="";
+    b.innerHTML=`<p>🎯 Before & After (Grade ${grade})</p>
+      <img src="${gradeData[grade].img}" style="width:240px;border-radius:12px;margin-top:6px;">`;
+  } else b.innerHTML="";
 
-  const result=document.getElementById("result");
-  result.classList.add("show");
-  result.scrollIntoView({behavior:"smooth"});
+  document.getElementById("result").classList.add("show");
+  document.getElementById("trustBanner").classList.add("show");
 });
 </script>
 </body>
